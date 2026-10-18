@@ -1,0 +1,438 @@
+/* ==========================================================================
+   1. Design Tokens & CSS Variables
+   ========================================================================== */
+:root {
+  --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  
+  /* Color Palette */
+  --color-bg-page: #f2f4f7;
+  --color-card-bg: #ffffff;
+  --color-text-main: #111827;
+  --color-text-muted: #6b7280;
+  --color-border: #e5e7eb;
+  --color-border-input: #d1d5db;
+  
+  /* Brand & Actions */
+  --color-primary: #000000;
+  --color-primary-hover: #1f2937;
+  --color-link: #2563eb;
+  --color-link-hover: #1d4ed8;
+
+  /* Validation Error Colors */
+  --color-error: #ef4444;
+  --color-error-bg: #fef2f2;
+  --color-error-text: #dc2626;
+
+  /* Dimensions & Radius */
+  --radius-card: 18px;
+  --radius-input: 8px;
+  --radius-btn: 8px;
+  --shadow-card: 0 20px 40px -15px rgba(0, 0, 0, 0.08), 0 0 1px 1px rgba(0, 0, 0, 0.03);
+}
+
+/* ==========================================================================
+   2. Reset & Base Styles
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-bg-page);
+  color: var(--color-text-main);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   3. Card Layout (Split Screen)
+   ========================================================================== */
+.page-wrapper {
+  width: 100%;
+  max-width: 940px;
+  margin: auto;
+}
+
+.auth-card {
+  background-color: var(--color-card-bg);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 580px;
+}
+
+/* ==========================================================================
+   4. Left Column: Authentication Form
+   ========================================================================== */
+.auth-form-column {
+  padding: 44px 44px 36px 44px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Brand Header */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+  color: var(--color-text-main);
+  user-select: none;
+}
+
+.brand-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.brand-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+/* Form Titles */
+.form-header {
+  margin-bottom: 22px;
+}
+
+.form-title {
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  letter-spacing: -0.5px;
+  margin-bottom: 6px;
+}
+
+.form-subtitle {
+  font-size: 0.92rem;
+  color: var(--color-text-muted);
+}
+
+/* Social Button (Sign in with Google) */
+.btn-social {
+  width: 100%;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background-color: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-btn);
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--color-text-main);
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-social:hover {
+  background-color: #f9fafb;
+  border-color: #d1d5db;
+}
+
+/* Divider ("or") */
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 18px 0;
+  gap: 14px;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background-color: var(--color-border);
+}
+
+.divider-text {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  text-transform: lowercase;
+}
+
+/* Form Elements */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.field-label {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+/* Input Container & Error States */
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.form-input {
+  width: 100%;
+  height: 42px;
+  padding: 0 38px 0 14px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: var(--color-text-main);
+  background-color: #ffffff;
+  border: 1px solid var(--color-border-input);
+  border-radius: var(--radius-input);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-input:focus {
+  border-color: #000000;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+}
+
+/* Validation Icon inside Input (Hidden by default) */
+.validation-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--color-error);
+  display: none; 
+  pointer-events: none;
+}
+
+.validation-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Error message underneath input (Hidden by default) */
+.field-message {
+  font-size: 0.78rem;
+  margin-top: 5px;
+  display: none;
+}
+
+.error-message {
+  color: var(--color-error-text);
+  font-weight: 500;
+}
+
+/* Active Error State (Triggered when JS adds .has-error) */
+.field-group.has-error .form-input {
+  border-color: var(--color-error);
+}
+
+.field-group.has-error .form-input:focus {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+}
+
+.field-group.has-error .validation-icon {
+  display: block; /* Reveals the exclamation mark icon */
+}
+
+.field-group.has-error .field-message {
+  display: block; /* Reveals the red error text */
+}
+
+/* Options Row (Remember Me & Forgot Password) */
+.form-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2px;
+  font-size: 0.84rem;
+}
+
+.checkbox-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  color: #4b5563;
+}
+
+.checkbox-control input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  accent-color: #000000;
+  cursor: pointer;
+}
+
+.link-subtle {
+  color: var(--color-link);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.84rem;
+}
+
+.link-subtle:hover {
+  text-decoration: underline;
+  color: var(--color-link-hover);
+}
+
+/* Primary Submit Button */
+.btn-primary {
+  width: 100%;
+  height: 44px;
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-btn);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: background-color 0.15s ease, transform 0.05s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.btn-primary:active {
+  transform: scale(0.99);
+}
+
+/* Footer Switch (Sign up / Sign in link) */
+.form-footer {
+  margin-top: auto;
+  padding-top: 24px;
+  text-align: center;
+  font-size: 0.86rem;
+  color: var(--color-text-muted);
+}
+
+.link-action {
+  color: var(--color-link);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.link-action:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   5. Right Column: Visual Hero Banner
+   ========================================================================== */
+.auth-hero-column {
+  position: relative;
+  background-color: #1e293b;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 40px 36px;
+}
+
+.hero-image-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+/* Dark gradient overlay at bottom so text is crisp */
+.hero-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 55%;
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.75) 0%, rgba(15, 23, 42, 0.35) 60%, rgba(15, 23, 42, 0) 100%);
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  color: #ffffff;
+}
+
+.hero-heading {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  margin-bottom: 8px;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.hero-description {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 380px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================================
+   6. Responsive Adaptations
+   ========================================================================== */
+@media (max-width: 820px) {
+  body {
+    padding: 16px;
+  }
+
+  .auth-card {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+  }
+
+  .auth-form-column {
+    padding: 32px 24px;
+  }
+
+  .auth-hero-column {
+    min-height: 380px;
+    padding: 32px 24px 28px;
+  }
+
+  .hero-image {
+    object-position: center 10%;
+  }
+
+  .hero-heading {
+    font-size: 1.4rem;
+    margin-bottom: 6px;
+  }
+
+  .hero-description {
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+}
